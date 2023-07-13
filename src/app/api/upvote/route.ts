@@ -46,14 +46,17 @@ export async function GET(request: Request) {
   // const body = await request.json();
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
-  const id = searchParams.get("user");
-  if (!session?.user?.email) redirect("/home");
+  const id = searchParams.get("user") as string;
+  const page = searchParams.get("page") as string;
 
-  const createdPost = await prisma.post.findMany({
-    where: {},
-    orderBy: {},
+  const createdPost = await prisma.upvote.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { post: true },
+  });
+  const resPost = createdPost.map((upvote) => {
+    return { ...upvote.post, upvotes: [{ userId: upvote.userId }] };
   });
 
   console.log(createdPost);
-  return NextResponse.json(createdPost);
+  return NextResponse.json(resPost);
 }

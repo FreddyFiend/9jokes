@@ -54,10 +54,7 @@ export default function Home() {
             }}
           />
         )}
-        <button
-          className="px-4 py-2  text-lg bg-blue-500 text-white rounded"
-          type="submit"
-        >
+        <button className="btn" type="submit">
           Submit post
         </button>
       </form>

@@ -10,6 +10,7 @@ type PropTypes = {
 };
 const PostPage: React.FC<PropTypes> = ({ post }) => {
   let [upvoteCount, setUpvoteCount] = useState(post.upvoteCount);
+  let [isUpvoted, setIsUpvoted] = useState(post.upvotes.length ? true : false);
 
   const upvotePost = async (postId: string) => {
     const res = await fetch("/api/upvote", {
@@ -20,6 +21,11 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
       body: JSON.stringify({ postId }),
     });
     const { message, post } = await res.json();
+    if (upvoteCount > post.upvoteCount) {
+      setIsUpvoted(false);
+    } else {
+      setIsUpvoted(true);
+    }
     setUpvoteCount(post.upvoteCount);
   };
 
@@ -29,9 +35,21 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
       <Image src={post.image} alt={post.title} width={680} height={1200} />
 
       <div className="buttons flex items-center  gap-2 pt-2">
-        <button onClick={() => upvotePost(post.id)} className="bg-gray-200 p-2">
-          <BiSolidUpArrowAlt className="text-5xl md:text-6xl" />
-        </button>
+        {isUpvoted ? (
+          <button
+            onClick={() => upvotePost(post.id)}
+            className="bg-gray-200 text-blue-500 p-2"
+          >
+            <BiSolidUpArrowAlt className="text-5xl md:text-6xl" />
+          </button>
+        ) : (
+          <button
+            onClick={() => upvotePost(post.id)}
+            className="bg-gray-200 p-2"
+          >
+            <BiSolidUpArrowAlt className="text-5xl md:text-6xl" />
+          </button>
+        )}
         <h6 className="bg-gray-200 p-2 text-5xl md:text-6xl"> {upvoteCount}</h6>
         <button className="bg-gray-200 p-2">
           <BiSolidCommentDetail className="text-5xl md:text-6xl" />
