@@ -1,7 +1,9 @@
 "use client";
 
 import Post from "@/types/post";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { BiSolidCommentDetail, BiSolidUpArrowAlt } from "react-icons/bi";
 
@@ -11,8 +13,10 @@ type PropTypes = {
 const PostPage: React.FC<PropTypes> = ({ post }) => {
   let [upvoteCount, setUpvoteCount] = useState(post.upvoteCount);
   let [isUpvoted, setIsUpvoted] = useState(post.upvotes.length ? true : false);
+  const { data: session, status } = useSession();
 
   const upvotePost = async (postId: string) => {
+    if (status !== "authenticated") return redirect("/api/auth/login");
     const res = await fetch("/api/upvote", {
       method: "POST",
       headers: {

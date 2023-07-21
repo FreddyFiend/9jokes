@@ -10,7 +10,7 @@ const PostsPage: React.FC<PropTypes> = ({ posts }) => {
   return (
     <div className="flex flex-col justify-center ">
       {posts.map((post) => (
-        <PostPage post={post} />
+        <PostPage post={post} key={post.id} />
       ))}
     </div>
   );

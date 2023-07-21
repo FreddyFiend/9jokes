@@ -20,21 +20,21 @@ const Navbar = () => {
       >
         <li className="px-2">
           <Link href={"/"}>
-            <BiHome className="text-2xl" />
+            <BiHome className=" text-3xl md:text-4xl" />
           </Link>
         </li>
         {status === "authenticated" ? (
           <li className="px-2">
             {" "}
-            <Link href={"/profile"}>
+            <Link href={`/profile/${session?.user?.id}`}>
               {" "}
-              <BiUser className="text-2xl" />{" "}
+              <BiUser className="text-3xl md:text-4xl" />{" "}
             </Link>
           </li>
         ) : (
           <li className="px-2">
             <Link href="/api/auth/signin">
-              <BiLogIn className="text-2xl" />
+              <BiLogIn className="text-3xl md:text-4xl" />
             </Link>
           </li>
         )}
@@ -43,7 +43,7 @@ const Navbar = () => {
         className="absolute md:hidden right-2 top-4 "
         onClick={() => setShowNav(!showNav)}
       >
-        <BiMenu className="text-2xl" />
+        <BiMenu className="text-3xl md:text-3xl" />
       </button>
     </nav>
   );
