@@ -3,6 +3,7 @@
 import Post from "@/types/post";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { BiSolidCommentDetail, BiSolidUpArrowAlt } from "react-icons/bi";
@@ -35,8 +36,10 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
 
   return (
     <div className="flex flex-col mx-auto gap-2 py-6">
-      <h3 className="text-2xl font-semibold">{post.title}</h3>
-      <Image src={post.image} alt={post.title} width={680} height={1200} />
+      <Link href={`/post/${post.id}`}>
+        <h3 className="text-2xl font-semibold">{post.title}</h3>
+        <Image src={post.image} alt={post.title} width={680} height={1200} />
+      </Link>
 
       <div className="buttons flex items-center  gap-2 pt-2">
         {isUpvoted ? (
@@ -55,9 +58,11 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
           </button>
         )}
         <h6 className="bg-gray-200 p-2 text-5xl md:text-6xl"> {upvoteCount}</h6>
-        <button className="bg-gray-200 p-2">
-          <BiSolidCommentDetail className="text-5xl md:text-6xl" />
-        </button>
+        <Link href={`/post/${post.id}`}>
+          <button className="bg-gray-200 p-2">
+            <BiSolidCommentDetail className="text-5xl md:text-6xl" />
+          </button>
+        </Link>
       </div>
     </div>
   );

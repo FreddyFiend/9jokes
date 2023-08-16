@@ -2,7 +2,7 @@ import "@uploadthing/react/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/navbar/Navbar";
 import AuthProvider from "../context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -1,44 +1,47 @@
-import PostsPage from "@/components/Posts";
+"use client";
+import PostsPage from "@/components/posts/Posts";
+import useSWR from "swr";
+import { useState } from "react";
+import fetcher from "@/lib/fetcher";
+import PostTab from "@/components/posts/PostTab";
 
-async function getData() {
-  const res = await fetch("http://localhost:3000/api/post");
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  // Recommendation: handle errors
-
-  return res.json();
-}
-
-const Home = async () => {
+const Home = () => {
   // const posts = await getData();
+  let [tab, setTab] = useState(`recent`);
+
+  let [query, setQuery] = useState(`/api/post?sort=recent`);
+
+  const {
+    data: posts,
+    error: postsError,
+    isLoading: postsIsLoading,
+  } = useSWR(query, () => fetcher(query));
 
   return (
     <div className="">
-      <div className="gap-2 flex justify-center items-center">
-        {/* <button
-          className={`px-8 py-2 font-medium text-xl ${
-            tab === "posts" ? "bg-gray-200" : "bg-white"
-          }`}
-          onClick={() => {
-            setQuery(`/api/post?user=${user.id}`);
-            setTab("posts");
-          }}
-        >
-          POSTS
-        </button> */}
+      <div className="gap-2 flex justify-center items-center pt-6">
+        <PostTab
+          tab="recent"
+          onSetQuery={() => setQuery(`/api/post?sort=recent`)}
+          onSetTab={() => setTab("recent")}
+          isActive={tab === "recent"}
+        />
+        <PostTab
+          tab="top"
+          onSetQuery={() => setQuery(`/api/post?sort=top`)}
+          onSetTab={() => setTab("top")}
+          isActive={tab === "top"}
+        />
+      </div>
 
-        {/* <button
-          className={`px-8 py-2 font-medium text-xl ${
-            tab === "upvotes" ? "bg-gray-200" : "bg-white"
-          }`}
-          onClick={() => {
-            setQuery(`/api/upvote?user=${user.id}`);
-            setTab("upvotes");
-          }}
-        >
-          UPVOTES
-        </button> */}
+      <div className="">
+        {postsIsLoading ? (
+          <p>Loading....</p>
+        ) : postsError ? (
+          "Something went wrong, please restart the page"
+        ) : (
+          <PostsPage posts={posts} />
+        )}
       </div>
       {/* <PostsPage posts={posts} />{" "} */}
     </div>

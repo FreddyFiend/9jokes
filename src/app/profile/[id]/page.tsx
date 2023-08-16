@@ -5,9 +5,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import useSWR from "swr";
-import PostsPage from "@/components/Posts";
-import { config } from "process";
+import PostsPage from "@/components/posts/Posts";
 import fetcher from "@/lib/fetcher";
+import PostTab from "@/components/posts/PostTab";
 
 // const fetcher = (query: string) => fetch(`${query}`).then((res) => res.json());
 
@@ -19,7 +19,7 @@ function ProfilePageWithId({ params }: { params: { id: string } }) {
 
   const {
     data: user,
-    error: postsError,
+    error: userError,
     isLoading: postsIsLoading,
   } = useSWR(query, () => fetcher(query));
 
@@ -42,32 +42,29 @@ function ProfilePageWithId({ params }: { params: { id: string } }) {
         </Link>
       )}
       <div className="gap-2 flex justify-center items-center">
-        <button
-          className={`px-8 py-2 font-medium text-xl ${
-            tab === "posts" ? "bg-gray-200" : "bg-white"
-          }`}
-          onClick={() => {
-            setQuery(`/api/user/${user.id}/posts`);
-            setTab("posts");
-          }}
-        >
-          POSTS
-        </button>
+        <PostTab
+          tab="posts"
+          onSetQuery={() => setQuery(`/api/user/${user.id}/posts`)}
+          onSetTab={() => setTab("posts")}
+          isActive={tab === "posts"}
+        />
 
-        <button
-          className={`px-8 py-2 font-medium text-xl ${
-            tab === "upvotes" ? "bg-gray-200" : "bg-white"
-          }`}
-          onClick={() => {
-            setQuery(`/api/user/${user.id}/upvotes`);
-            setTab("upvotes");
-          }}
-        >
-          UPVOTES
-        </button>
+        <PostTab
+          tab="upvotes"
+          onSetQuery={() => setQuery(`/api/user/${user.id}/upvotes`)}
+          onSetTab={() => setTab("upvotes")}
+          isActive={tab === "upvotes"}
+        />
       </div>
+
       <div className="bg-gray-200">
-        {postsIsLoading ? <p>Loading....</p> : <PostsPage posts={user.posts} />}
+        {postsIsLoading ? (
+          <p>Loading....</p>
+        ) : userError ? (
+          "User not found"
+        ) : (
+          <PostsPage posts={user.posts} />
+        )}
       </div>
     </div>
   );

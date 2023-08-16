@@ -8,10 +8,10 @@ type PropTypes = {
 
 const PostsPage: React.FC<PropTypes> = ({ posts }) => {
   return (
-    <div className="flex flex-col justify-center ">
-      {posts.map((post) => (
-        <PostPage post={post} key={post.id} />
-      ))}
+    <div className="flex flex-col justify-center  p-1 md:p-4">
+      {posts
+        ? posts.map((post) => <PostPage post={post} key={post.id} />)
+        : "empty"}
     </div>
   );
 };

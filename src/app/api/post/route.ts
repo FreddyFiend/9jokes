@@ -27,28 +27,26 @@ export async function GET(request: Request) {
   // const body = await request.json();
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
-  const id = searchParams.get("user") as string;
-  const upvote = searchParams.get("upvote") as string;
+  const sort = searchParams.get("sort") as string;
   let userId = "";
+
   if (session?.user?.id) {
     userId = session?.user?.id as string;
   }
 
-  let where = {};
   let orderBy = {};
-  if (upvote) {
-    where = { upvotes: { some: { userId: upvote || undefined } } };
+
+  if (sort === "top") {
     orderBy = {
-      upvotes: {
-        createdAt: "desc",
-      },
+      upvoteCount: "desc",
     };
   }
-  if (id) {
-    where = { userId: id || undefined };
+  if (sort === "recent") {
+    orderBy = {
+      createdAt: "desc",
+    };
   }
   const createdPost = await prisma.post.findMany({
-    where,
     include: {
       upvotes: {
         where: {
