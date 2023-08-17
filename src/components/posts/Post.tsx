@@ -7,6 +7,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { BiSolidCommentDetail, BiSolidUpArrowAlt } from "react-icons/bi";
+import PostActions from "./PostActions";
 
 type PropTypes = {
   post: Post;
@@ -35,35 +36,18 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
   };
 
   return (
-    <div className="flex flex-col mx-auto gap-2 py-6">
+    <div className="flex flex-col mx-auto gap-2 py-6  ">
+      <hr />
       <Link href={`/post/${post.id}`}>
-        <h3 className="text-2xl font-semibold">{post.title}</h3>
+        <h3 className="text-2xl font-semibold py-1">{post.title}</h3>
         <Image src={post.image} alt={post.title} width={680} height={1200} />
       </Link>
-
-      <div className="buttons flex items-center  gap-2 pt-2">
-        {isUpvoted ? (
-          <button
-            onClick={() => upvotePost(post.id)}
-            className="bg-gray-200 text-blue-500 p-2"
-          >
-            <BiSolidUpArrowAlt className="text-5xl md:text-6xl" />
-          </button>
-        ) : (
-          <button
-            onClick={() => upvotePost(post.id)}
-            className="bg-gray-200 p-2"
-          >
-            <BiSolidUpArrowAlt className="text-5xl md:text-6xl" />
-          </button>
-        )}
-        <h6 className="bg-gray-200 p-2 text-5xl md:text-6xl"> {upvoteCount}</h6>
-        <Link href={`/post/${post.id}`}>
-          <button className="bg-gray-200 p-2">
-            <BiSolidCommentDetail className="text-5xl md:text-6xl" />
-          </button>
-        </Link>
-      </div>
+      <PostActions
+        isUpvoted={isUpvoted}
+        upvoteCount={upvoteCount}
+        upvotePost={() => upvotePost(post.id)}
+        postLink={`/post/${post.id}`}
+      />
     </div>
   );
 };

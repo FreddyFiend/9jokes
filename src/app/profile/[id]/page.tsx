@@ -25,22 +25,13 @@ function ProfilePageWithId({ params }: { params: { id: string } }) {
 
   return (
     <div className="p-6 ">
+      {session?.user?.id === user?.id && (
+        <div className="text-center text-2xl font-bold">My Profile</div>
+      )}
       <div className="flex flex-row items-center gap-2">
         <h3 className="py-4 text-xl font-semibold"> {user?.name} </h3>
-        {session?.user?.id === user?.id && (
-          <Link
-            className="text-lg font-semibold text-red-500"
-            href="/api/auth/signout"
-          >
-            Sign Out
-          </Link>
-        )}
       </div>
-      {session?.user?.id === user?.id && (
-        <Link className="text-lg font-semibold text-sky-500" href="/upload">
-          New Post
-        </Link>
-      )}
+
       <div className="gap-2 flex justify-center items-center">
         <PostTab
           tab="posts"
@@ -57,7 +48,7 @@ function ProfilePageWithId({ params }: { params: { id: string } }) {
         />
       </div>
 
-      <div className="bg-gray-200">
+      <div className="">
         {postsIsLoading ? (
           <p>Loading....</p>
         ) : userError ? (

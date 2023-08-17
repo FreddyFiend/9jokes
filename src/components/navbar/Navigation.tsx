@@ -17,17 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({
   session,
 }) => {
   return (
-    <div
-      className={`
-      
-       
-        absolute 
-        right-0 
-        top-16
-        transform
-        
-  `}
-    >
+    <div className={`absolute right-0 top-16 transform `}>
       <div
         className={`
             flex 
@@ -36,11 +26,20 @@ const Navigation: React.FC<NavigationProps> = ({
             rounded-md
             bg-white 
             transition
+            border
+            700
+            shadow
             ${isOpen ? "" : "translate-x-full"}
         `}
       >
         <GridItems isOpen={isOpen} isLoggedIn={isLoggedIn} session={session} />
-        <div className="pt-4">
+
+        <div className="py-4">
+          <hr />
+        </div>
+
+        <div className="text-xl font-bold">Categories</div>
+        <div className="pt-2">
           {categories.map((item) => (
             <ListItem
               title={item.title}

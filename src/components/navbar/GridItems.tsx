@@ -3,7 +3,8 @@
 import { Session } from "next-auth";
 import Link from "next/link";
 import React from "react";
-import { BiHome, BiLogIn, BiUser } from "react-icons/bi";
+import { BiHome, BiLogIn, BiLogOut, BiUpload, BiUser } from "react-icons/bi";
+import GridItem from "./GridItem";
 
 type GridItemsProps = {
   isOpen: boolean;
@@ -17,40 +18,25 @@ const GridItems: React.FC<GridItemsProps> = ({
   session,
 }) => {
   return (
-    <ul className={` flex   flex-row links pt-2 justify-around items-center`}>
-      <li>
-        <Link
-          href={"/"}
-          className=" flex flex-col justify-center items-center  "
-        >
-          <BiHome className=" text-3xl md:text-4xl" />
-          <div className="pt-1 font-semibold">Home</div>
-        </Link>
-      </li>
+    <div className={` links  `}>
       {isLoggedIn ? (
-        <li>
-          {" "}
-          <Link
-            href={`/profile/${session?.user?.id}`}
-            className=" flex flex-col justify-center items-center "
-          >
-            {" "}
-            <BiUser className="text-3xl md:text-4xl" />{" "}
-            <div className="pt-1 font-semibold">Profile</div>
-          </Link>
-        </li>
+        <div className="grid grid-cols-2 gap-4 ">
+          <GridItem link="/" icon={BiHome} label="Home" />
+          <GridItem
+            link={`/profile/${session?.user?.id}`}
+            icon={BiUser}
+            label="Profile"
+          />
+          <GridItem link="/api/auth/signout" icon={BiLogOut} label="Logout" />
+          <GridItem link="/upload" icon={BiUpload} label="Upload" />
+        </div>
       ) : (
-        <li>
-          <Link
-            href="/api/auth/signin"
-            className=" flex flex-col justify-center items-center "
-          >
-            <BiLogIn className="text-3xl md:text-4xl" />
-            <div className="pt-1 font-semibold">Login</div>
-          </Link>
-        </li>
+        <div className="grid grid-cols-2 justify-around items-center">
+          <GridItem link="/api/auth/signin" icon={BiHome} label="Home" />
+          <GridItem link="/" icon={BiLogIn} label="Login/Signup" />
+        </div>
       )}
-    </ul>
+    </div>
   );
 };
 

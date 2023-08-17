@@ -1,11 +1,15 @@
 "use client";
 
+import { categories } from "@/components/navbar/Navbar";
 import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
 import { useState } from "react";
+import Select from "react-select";
 
 export default function Home() {
   let [title, setTitle] = useState("");
+  let [category, setCategory] = useState("");
+  let [selectedCategory, setSelectedCategory] = useState(null);
   let [imageKey, setImageKey] = useState("");
   let [imageUrl, setImageUrl] = useState("");
   const createPost = async () => {
@@ -23,13 +27,20 @@ export default function Home() {
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
       <form
         onSubmit={createPost}
-        className="flex flex-col justify-center items-center gap-4"
+        className="flex flex-col items-center justify-center gap-4 ut-button:bg-red-500 "
       >
         <input
-          className="border-2 px-4 py-2 border-black rounded "
+          className="px-4 py-2 border rounded border-neutral-500 "
+          placeholder="Title"
           value={title}
           onChange={(evt) => setTitle(evt.target.value)}
-        ></input>
+        />
+        <Select
+          className="px-4 py-2 border rounded border-neutral-500"
+          defaultValue={selectedCategory}
+          onChange={setSelectedCategory}
+          options={categories}
+        />
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -39,6 +50,7 @@ export default function Home() {
           />
         ) : (
           <UploadButton
+            className="mt-4 ut-button:border ut-button:border-neutral-500 ut-button:bg-transparent ut-button:text-black ut-button:ut-readying:bg-red-500/50"
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               // Do something with the response
