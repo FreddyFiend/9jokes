@@ -1,5 +1,6 @@
 "use client";
 
+import useNavbar from "@/app/hooks/useNavbar";
 import React from "react";
 import { BiMenu } from "react-icons/bi";
 
@@ -43,13 +44,17 @@ export const categories = [
 ];
 
 const Navbar = () => {
+  const navbarStore = useNavbar();
   return (
-    <nav className=" fixed w-full flex flex-col items-center justify-center p-2 overflow-hidden shadow md:flex-row md:justify-between">
+    <nav className="fixed flex flex-col items-center justify-center w-full p-2 overflow-hidden shadow md:flex-row md:justify-between">
       <div className="left-0 logo">
         <div className="text-2xl font-extrabold">9 JOKES</div>
       </div>
 
-      <button className="absolute right-2 top-2 " onClick={() => {}}>
+      <button
+        className="absolute right-2 top-2 "
+        onClick={() => navbarStore.toggle()}
+      >
         <BiMenu className="text-3xl md:text-3xl" />
       </button>
     </nav>

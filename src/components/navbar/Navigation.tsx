@@ -4,27 +4,38 @@ import { categories } from "./Navbar";
 import ListItem from "./ListItem";
 import GridItems from "./GridItems";
 import { useSession } from "next-auth/react";
+import useNavbar from "@/app/hooks/useNavbar";
 
 const Navigation = () => {
-  let [isOpen, setIsOpen] = useState(true);
   const { data: session, status } = useSession();
+  const navbarStore = useNavbar();
+
   return (
     <div
       className={`
     flex 
     flex-col
-    pt-8
-    px-4
+    
     rounded-md
     bg-white 
     transition
     border
-    overflow-y-scroll
     shadow
+    ${
+      navbarStore.isOpen
+        ? "md:relative md:pt-8 md:px-4 md:top-0 md:overflow-y-scroll"
+        : "w-0 p-0 overflow-hidden"
+    }
+    ${
+      navbarStore.isOpen
+        ? " fixed left-0  pt-8 px-4  top-12 z-20 overflow-y-scroll "
+        : "w-0 p-0 overflow-hidden"
+    }
+
 `}
     >
       <GridItems
-        isOpen={isOpen}
+        isOpen={true}
         isLoggedIn={status === "authenticated"}
         session={session}
       />
