@@ -8,7 +8,7 @@ type PropTypes = {
 
 const PostsPage: React.FC<PropTypes> = ({ posts }) => {
   return (
-    <div className="flex flex-col justify-center  p-1 md:p-4 shadow">
+    <div className="px-1 shadow md:px-2">
       {posts
         ? posts.map((post) => <PostPage post={post} key={post.id} />)
         : "empty"}

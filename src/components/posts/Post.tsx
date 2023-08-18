@@ -27,6 +27,7 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
       body: JSON.stringify({ postId }),
     });
     const { message, post } = await res.json();
+
     if (upvoteCount > post.upvoteCount) {
       setIsUpvoted(false);
     } else {
@@ -36,11 +37,16 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
   };
 
   return (
-    <div className="flex flex-col mx-auto gap-2 py-6  ">
-      <hr />
+    <div className="flex flex-col gap-2 py-6 mx-auto ">
       <Link href={`/post/${post.id}`}>
-        <h3 className="text-2xl font-semibold py-1">{post.title}</h3>
-        <Image src={post.image} alt={post.title} width={680} height={1200} />
+        <h3 className="py-1 text-2xl font-semibold">{post.title}</h3>
+        <Image
+          layout="responsive"
+          src={post.image}
+          alt={post.title}
+          width={680}
+          height={1247}
+        />
       </Link>
       <PostActions
         isUpvoted={isUpvoted}

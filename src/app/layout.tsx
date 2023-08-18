@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
 import AuthProvider from "../context/AuthProvider";
+import Navigation from "@/components/navbar/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,15 @@ export default function RootLayout({
       <AuthProvider>
         <body className={inter.className}>
           <Navbar />
-          {children}
+          <div className="fixed  flex justify-between top-12 h-[calc(100vh-3rem)] w-screen">
+            <div className="hidden md:block">
+              <Navigation />
+            </div>
+
+            <div className="relative flex justify-center flex-grow overflow-y-scroll">
+              {children}
+            </div>
+          </div>
         </body>
       </AuthProvider>
     </html>

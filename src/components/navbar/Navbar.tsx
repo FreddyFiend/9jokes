@@ -1,9 +1,7 @@
 "use client";
-import { useSession } from "next-auth/react";
+
 import React from "react";
-import { useState } from "react";
 import { BiMenu } from "react-icons/bi";
-import Navigation from "./Navigation";
 
 export const categories = [
   {
@@ -45,25 +43,15 @@ export const categories = [
 ];
 
 const Navbar = () => {
-  let [showNav, setShowNav] = useState(false);
-  const { data: session, status } = useSession();
   return (
-    <nav className="flex flex-col items-center justify-center p-2 overflow-hidden shadow md:flex-row md:justify-between">
+    <nav className=" fixed w-full flex flex-col items-center justify-center p-2 overflow-hidden shadow md:flex-row md:justify-between">
       <div className="left-0 logo">
         <div className="text-2xl font-extrabold">9 JOKES</div>
       </div>
 
-      <button
-        className="absolute right-2 top-2 "
-        onClick={() => setShowNav(!showNav)}
-      >
+      <button className="absolute right-2 top-2 " onClick={() => {}}>
         <BiMenu className="text-3xl md:text-3xl" />
       </button>
-      <Navigation
-        isOpen={showNav}
-        isLoggedIn={status === "authenticated"}
-        session={session}
-      />
     </nav>
   );
 };

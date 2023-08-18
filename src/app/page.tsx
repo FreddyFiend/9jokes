@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <div className="">
-      <div className="gap-2 flex justify-center items-center pt-6">
+      <div className="flex items-center justify-center gap-2 pt-6">
         <PostTab
           tab="recent"
           onSetQuery={() => setQuery(`/api/post?sort=recent`)}
@@ -34,15 +34,13 @@ const Home = () => {
         />
       </div>
 
-      <div className="">
-        {postsIsLoading ? (
-          <p>Loading....</p>
-        ) : postsError ? (
-          "Something went wrong, please restart the page"
-        ) : (
-          <PostsPage posts={posts} />
-        )}
-      </div>
+      {postsIsLoading ? (
+        <p>Loading....</p>
+      ) : postsError ? (
+        "Something went wrong, please restart the page"
+      ) : (
+        <PostsPage posts={posts} />
+      )}
       {/* <PostsPage posts={posts} />{" "} */}
     </div>
   );
