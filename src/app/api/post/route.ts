@@ -28,12 +28,17 @@ export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   const { searchParams } = new URL(request.url);
   const sort = searchParams.get("sort") as string;
+  const category = searchParams.get("category") as string;
   let userId = "";
 
   if (session?.user?.id) {
     userId = session?.user?.id as string;
   }
-
+  console.log(category);
+  console.log(sort);
+  let where = {
+    category: category || undefined,
+  };
   let orderBy = {};
 
   if (sort === "top") {
@@ -46,7 +51,9 @@ export async function GET(request: Request) {
       createdAt: "desc",
     };
   }
+  console.log(where);
   const createdPost = await prisma.post.findMany({
+    where,
     include: {
       upvotes: {
         where: {

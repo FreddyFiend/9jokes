@@ -1,14 +1,37 @@
 "use client";
-import React, { useState } from "react";
+
+import qs from "query-string";
+import { isBrowser, isMobile } from "react-device-detect";
+import React, { useCallback, useEffect, useState } from "react";
 import { categories } from "./Navbar";
 import ListItem from "./ListItem";
 import GridItems from "./GridItems";
 import { useSession } from "next-auth/react";
 import useNavbar from "@/app/hooks/useNavbar";
+import { useRouter, useSearchParams } from "next/navigation";
+import useHomepageQuery from "@/app/hooks/useHomepageQuery";
 
 const Navigation = () => {
   const { data: session, status } = useSession();
   const navbarStore = useNavbar();
+  const homepageQuery = useHomepageQuery();
+  const router = useRouter();
+  useEffect(() => {
+    if (!isMobile) {
+      navbarStore.toggle();
+    }
+    console.log(isMobile);
+  }, [isMobile]);
+
+  const searchParams = useSearchParams();
+
+  const handleCategoryClick = useCallback(
+    (value: string) => {
+      homepageQuery.setQuery(homepageQuery.query, { category: value });
+      console.log(qs.parse(homepageQuery.query));
+    },
+    [router, homepageQuery]
+  );
 
   return (
     <div
@@ -52,6 +75,7 @@ const Navigation = () => {
             description={item.description}
             linkTo={item.linkTo}
             key={item.value}
+            onSelect={(value) => handleCategoryClick(value)}
           />
         ))}
       </div>

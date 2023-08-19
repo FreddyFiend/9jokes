@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { isBrowser, isMobile } from "react-device-detect";
+
 type NavbarStoreTypes = {
   isOpen: boolean;
   toggle: () => void;
 };
 
 const useNavbar = create<NavbarStoreTypes>((set) => ({
-  isOpen: !isMobile,
+  isOpen: false,
   toggle: () => set((state) => ({ isOpen: !state.isOpen })),
 }));
 
