@@ -5,42 +5,68 @@ import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
 import { useState } from "react";
 import Select from "react-select";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type FormValues = {
+  title: string;
+  category: string;
+};
 
 export default function Home() {
-  let [title, setTitle] = useState("");
-  let [category, setCategory] = useState("");
-  let [selectedCategory, setSelectedCategory] = useState(null);
   let [imageKey, setImageKey] = useState("");
   let [imageUrl, setImageUrl] = useState("");
-  const createPost = async () => {
+
+  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log(data);
     const res = await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, imageUrl, imageKey }),
+      body: JSON.stringify({
+        title: data.title,
+        category: data.category,
+        imageUrl,
+        imageKey,
+      }),
     });
     console.log(await res.json());
   };
 
+  const createPost = async () => {};
+
   return (
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
       <form
-        onSubmit={createPost}
+        // onSubmit={createPost}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center justify-center gap-4 ut-button:bg-red-500 "
       >
         <input
           className="px-4 py-2 border rounded border-neutral-500 "
           placeholder="Title"
-          value={title}
-          onChange={(evt) => setTitle(evt.target.value)}
+          {...(register("title"), { required: true, maxLength: 20 })}
+          // value={title}
+          // onChange={(evt) => setTitle(evt.target.value)}
         />
-        <Select
+        <select
+          className="px-4 py-2 border rounded border-neutral-500 "
+          {...(register("category"), { required: true })}
+        >
+          {categories.map((cat) => (
+            <option value={cat.value}>{cat.label}</option>
+          ))}
+        </select>
+        {/* <Select
+          {...register("")}
+          value={category}
+          name={"category"}
+          defaultValue={categories[0]}
           className="px-4 py-2 border rounded border-neutral-500"
-          defaultValue={selectedCategory}
-          onChange={setSelectedCategory}
           options={categories}
-        />
+          onChange={(value) => setCategory(value)}
+        /> */}
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -55,8 +81,8 @@ export default function Home() {
             onClientUploadComplete={(res) => {
               // Do something with the response
               if (!res || res.length === 0) return alert("Error Ocurred");
-              setImageUrl(res[0].fileUrl);
-              setImageKey(res[0].fileKey);
+              setImageUrl(res[0].url);
+              setImageKey(res[0].key);
               console.log("Files: ", res);
               alert("Upload Completed");
             }}
@@ -66,9 +92,11 @@ export default function Home() {
             }}
           />
         )}
-        <button className="btn" type="submit">
-          Submit post
-        </button>
+        {imageUrl && (
+          <button className="btn" type="submit">
+            Submit post
+          </button>
+        )}
       </form>
     </main>
   );

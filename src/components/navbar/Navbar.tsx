@@ -9,37 +9,31 @@ export const categories = [
     label: "Funny",
     value: "funny",
     description: "funny looking posts",
-    linkTo: "/cat/funny",
   },
   {
     label: "Sarcasm",
     value: "sarcasm",
     description: "posts that inspire sarcasm",
-    linkTo: "/cat/sarcasm",
   },
   {
     label: "Horror",
     value: "horror",
     description: "horrific Posts",
-    linkTo: "/cat/horror",
   },
   {
     label: "Gaming",
     value: "gaming",
     description: "Posts that are about games",
-    linkTo: "/cat/gaming",
   },
   {
     label: "Tech",
     value: "tech",
     description: "Posts that are about tech ",
-    linkTo: "/cat/tech",
   },
   {
     label: "Memes",
     value: "memes",
     description: "Average internet memes",
-    linkTo: "/cat/memes",
   },
 ];
 
