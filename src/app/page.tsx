@@ -25,7 +25,6 @@ const Home = () => {
   return (
     <div className="">
       <div className="flex items-center justify-center gap-2 pt-6">
-        <p className="p-8">hp qu: {homepageQuery.query} </p>
         <PostTab
           tab="recent"
           onSetQuery={() =>

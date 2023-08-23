@@ -16,6 +16,7 @@ export async function POST(request: Request) {
       imageKey: body.imageKey,
       userId: session.user.id,
       title: body.title,
+      category: body.category,
     },
   });
 

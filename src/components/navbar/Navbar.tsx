@@ -6,6 +6,11 @@ import { BiMenu } from "react-icons/bi";
 
 export const categories = [
   {
+    label: "Any",
+    value: "",
+    description: "Posts from all categories",
+  },
+  {
     label: "Funny",
     value: "funny",
     description: "funny looking posts",

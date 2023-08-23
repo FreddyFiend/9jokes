@@ -41,15 +41,18 @@ export default function Home() {
       <form
         // onSubmit={createPost}
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-center gap-4 ut-button:bg-red-500 "
+        className="grid items-center justify-center grid-cols-1 gap-2 ut-button:bg-red-500 w-80"
       >
+        <div className="pt-2">Title</div>
         <input
           className="px-4 py-2 border rounded border-neutral-500 "
           placeholder="Title"
-          {...(register("title"), { required: true, maxLength: 20 })}
+          {...(register("title"), { required: true, maxLength: 60 })}
           // value={title}
           // onChange={(evt) => setTitle(evt.target.value)}
         />
+        <div className="pt-2">Category</div>
+
         <select
           className="px-4 py-2 border rounded border-neutral-500 "
           {...(register("category"), { required: true })}
@@ -67,6 +70,8 @@ export default function Home() {
           options={categories}
           onChange={(value) => setCategory(value)}
         /> */}
+        <div className="pt-2">Image</div>
+
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -76,7 +81,7 @@ export default function Home() {
           />
         ) : (
           <UploadButton
-            className="mt-4 ut-button:border ut-button:border-neutral-500 ut-button:bg-transparent ut-button:text-black ut-button:ut-readying:bg-red-500/50"
+            className=" ut-button:border ut-button:border-neutral-500 ut-button:bg-transparent ut-button:text-black ut-button:ut-readying:bg-red-500/50"
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               // Do something with the response

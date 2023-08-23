@@ -1,7 +1,7 @@
 "use client";
 
 import qs from "query-string";
-import { isBrowser, isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import React, { useCallback, useEffect, useState } from "react";
 import { categories } from "./Navbar";
 import ListItem from "./ListItem";
@@ -18,10 +18,10 @@ const Navigation = () => {
   const router = useRouter();
   useEffect(() => {
     if (!isMobile) {
-      navbarStore.toggle();
+      navbarStore.setTrue();
     }
     console.log(isMobile);
-  }, [isMobile]);
+  }, []);
 
   const searchParams = useSearchParams();
 
@@ -29,6 +29,7 @@ const Navigation = () => {
     (value: string) => {
       homepageQuery.setQuery(homepageQuery.query, { category: value });
       console.log(qs.parse(homepageQuery.query));
+      router.push("/");
     },
     [router, homepageQuery]
   );
@@ -73,7 +74,6 @@ const Navigation = () => {
             label={item.label}
             value={item.value}
             description={item.description}
-            linkTo={item.linkTo}
             key={item.value}
             onSelect={(value) => handleCategoryClick(value)}
           />
