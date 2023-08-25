@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useState } from "react";
 import Select from "react-select";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { redirect, useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 type FormValues = {
   title: string;
@@ -15,6 +17,8 @@ type FormValues = {
 export default function Home() {
   let [imageKey, setImageKey] = useState("");
   let [imageUrl, setImageUrl] = useState("");
+
+  const router = useRouter();
 
   const { register, handleSubmit } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -31,10 +35,11 @@ export default function Home() {
         imageKey,
       }),
     });
-    console.log(await res.json());
+    if (res.status === 200) {
+      toast.success("Successfully posted!");
+      router.push("/");
+    }
   };
-
-  const createPost = async () => {};
 
   return (
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
@@ -47,7 +52,7 @@ export default function Home() {
         <input
           className="px-4 py-2 border rounded border-neutral-500 "
           placeholder="Title"
-          {...(register("title"), { required: true, maxLength: 60 })}
+          {...register("title", { required: true, maxLength: 60 })}
           // value={title}
           // onChange={(evt) => setTitle(evt.target.value)}
         />
@@ -55,7 +60,7 @@ export default function Home() {
 
         <select
           className="px-4 py-2 border rounded border-neutral-500 "
-          {...(register("category"), { required: true })}
+          {...register("category")}
         >
           {categories.map((cat) => (
             <option value={cat.value}>{cat.label}</option>
@@ -85,15 +90,15 @@ export default function Home() {
             endpoint="imageUploader"
             onClientUploadComplete={(res) => {
               // Do something with the response
-              if (!res || res.length === 0) return alert("Error Ocurred");
+              if (!res || res.length === 0) return toast.error("Error Ocurred");
               setImageUrl(res[0].url);
               setImageKey(res[0].key);
-              console.log("Files: ", res);
-              alert("Upload Completed");
+              // console.log("Files: ", res);
+              toast.success("Upload Completed");
             }}
             onUploadError={(error: Error) => {
               // Do something with the error.
-              alert(`ERROR! ${error.message}`);
+              toast.error(`ERROR! ${error.message}`);
             }}
           />
         )}

@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
 import AuthProvider from "../context/AuthProvider";
 import Navigation from "@/components/navbar/Navigation";
+import ToasterProvider from "./providers/ToasterProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
         <body className={inter.className}>
+          <ToasterProvider />
           <Navbar />
           <div className="fixed  flex justify-between top-12 h-[calc(100vh-3rem)] w-screen">
             <Navigation />

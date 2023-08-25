@@ -20,7 +20,6 @@ export async function POST(request: Request) {
     },
   });
 
-  console.log(createdPost);
   return NextResponse.json({ post: createdPost });
 }
 

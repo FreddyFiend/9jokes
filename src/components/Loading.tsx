@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import ReactLoading, { LoadingType } from "react-loading";
 
@@ -8,8 +10,8 @@ type LoadingProps = {
 
 const Loading: React.FC<LoadingProps> = ({ type, color }) => {
   return (
-    <div>
-      <ReactLoading type={type} color={color} height={"20%"} width={"20%"} />
+    <div className="w-screen h-screen flex justify-center items-center">
+      <ReactLoading type={type} color={color} height={"200px"} width={"200px"} />
     </div>
   );
 };

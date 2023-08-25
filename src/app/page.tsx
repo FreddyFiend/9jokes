@@ -7,6 +7,7 @@ import PostTab from "@/components/posts/PostTab";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import useHomepageQuery from "./hooks/useHomepageQuery";
 import { Router } from "next/router";
+import Loading from "@/components/Loading";
 
 const Home = () => {
   // const posts = await getData();
@@ -45,7 +46,7 @@ const Home = () => {
       </div>
 
       {postsIsLoading ? (
-        <p>Loading....</p>
+        <Loading type="bubbles" color="black" />
       ) : postsError ? (
         "Something went wrong, please restart the page"
       ) : (
