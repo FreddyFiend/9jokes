@@ -11,9 +11,11 @@ type PropTypes = {
 const PostsPage: React.FC<PropTypes> = ({ posts }) => {
   return (
     <div className="px-1 shadow md:px-2">
-      {posts
-        ? posts.map((post) => <PostPage post={post} key={post.id} />)
-        : "empty"}
+      {posts.length > 0 ? (
+        posts.map((post) => <PostPage post={post} key={post.id} />)
+      ) : (
+        <div className=" py-8 text-lg">Empty</div>
+      )}
     </div>
   );
 };

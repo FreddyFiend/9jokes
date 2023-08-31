@@ -14,7 +14,9 @@ type PropTypes = {
 };
 const PostPage: React.FC<PropTypes> = ({ post }) => {
   let [upvoteCount, setUpvoteCount] = useState(post.upvoteCount);
-  let [isUpvoted, setIsUpvoted] = useState(post.upvotes.length ? true : false);
+  let [isUpvoted, setIsUpvoted] = useState(
+    post?.upvotes?.length ? true : false
+  );
   const { data: session, status } = useSession();
 
   const upvotePost = async (postId: string) => {
@@ -41,6 +43,7 @@ const PostPage: React.FC<PropTypes> = ({ post }) => {
       <Link href={`/post/${post.id}`}>
         <h3 className="py-1 text-2xl font-semibold">{post.title}</h3>
         <Image
+          sizes="(max-width: 668px) 100vw"
           layout="responsive"
           src={post.image}
           alt={post.title}

@@ -35,14 +35,14 @@ function ProfilePageWithId({ params }: { params: { id: string } }) {
       <div className="gap-2 flex justify-center items-center">
         <PostTab
           tab="posts"
-          onSetQuery={() => setQuery(`/api/user/${user.id}/posts`)}
+          onSetQuery={() => setQuery(`/api/user/${params.id}/posts`)}
           onSetTab={() => setTab("posts")}
           isActive={tab === "posts"}
         />
 
         <PostTab
           tab="upvotes"
-          onSetQuery={() => setQuery(`/api/user/${user.id}/upvotes`)}
+          onSetQuery={() => setQuery(`/api/user/${params.id}/upvotes`)}
           onSetTab={() => setTab("upvotes")}
           isActive={tab === "upvotes"}
         />

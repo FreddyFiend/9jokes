@@ -50,9 +50,10 @@ const PostPage = ({ params }: { params: { id: string } }) => {
 
       <div className="comments pt-8">
         <ul>
-          {post.comments.map((comment: Comment) => (
-            <li className="pt-2">
-              <div className="text-lg">{comment.user.name}</div>
+          {post.comments.map((comment: Comment, idx: number) => (
+            <li className="pt-2" key={idx}>
+              <hr />
+              <div className="text-lg font-bold">{comment.user.name}</div>
               <div className="text-md">{comment.text}</div>
             </li>
           ))}
