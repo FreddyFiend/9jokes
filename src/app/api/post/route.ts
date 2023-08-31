@@ -34,8 +34,6 @@ export async function GET(request: Request) {
   if (session?.user?.id) {
     userId = session?.user?.id as string;
   }
-  console.log(category);
-  console.log(sort);
   let where = {
     category: category || undefined,
   };
@@ -51,8 +49,7 @@ export async function GET(request: Request) {
       createdAt: "desc",
     };
   }
-  console.log(where);
-  const createdPost = await prisma.post.findMany({
+  const posts = await prisma.post.findMany({
     where,
     include: {
       upvotes: {
@@ -65,6 +62,5 @@ export async function GET(request: Request) {
     orderBy,
   });
 
-  console.log(createdPost);
-  return NextResponse.json(createdPost);
+  return NextResponse.json(posts);
 }

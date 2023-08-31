@@ -32,8 +32,12 @@ const GridItems: React.FC<GridItemsProps> = ({
         </div>
       ) : (
         <div className="grid grid-cols-2 justify-around items-center">
-          <GridItem link="/api/auth/signin" icon={BiHome} label="Home" />
-          <GridItem link="/" icon={BiLogIn} label="Login/Signup" />
+          <GridItem link="/" icon={BiHome} label="Home" />
+          <GridItem
+            link="/api/auth/signin"
+            icon={BiLogIn}
+            label="Login/Signup"
+          />
         </div>
       )}
     </div>
