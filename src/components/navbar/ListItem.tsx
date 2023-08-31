@@ -16,7 +16,7 @@ const ListItem: React.FC<ListItemProps> = ({
 }) => {
   return (
     <div onClick={() => onSelect(value)}>
-      <div className="p-2 rounded hover:bg-neutral-100">
+      <div className="p-2 rounded hover:bg-neutral-100 hover:cursor-pointer ">
         {" "}
         <div className="text-lg font-semibold">{label}</div>
         <div className="text-neutral-700"> {description} </div>

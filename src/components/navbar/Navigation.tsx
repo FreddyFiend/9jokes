@@ -16,11 +16,6 @@ const Navigation = () => {
   const navbarStore = useNavbar();
   const homepageQuery = useHomepageQuery();
   const router = useRouter();
-  useEffect(() => {
-    if (!isMobile) {
-      navbarStore.setTrue();
-    }
-  }, [navbarStore]);
 
   // const searchParams = useSearchParams();
 
