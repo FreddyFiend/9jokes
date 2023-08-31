@@ -2,13 +2,13 @@
 
 import qs from "query-string";
 import { isMobile } from "react-device-detect";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { categories } from "./Navbar";
 import ListItem from "./ListItem";
 import GridItems from "./GridItems";
 import { useSession } from "next-auth/react";
 import useNavbar from "@/app/hooks/useNavbar";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useHomepageQuery from "@/app/hooks/useHomepageQuery";
 
 const Navigation = () => {
@@ -20,10 +20,9 @@ const Navigation = () => {
     if (!isMobile) {
       navbarStore.setTrue();
     }
-    console.log(isMobile);
-  }, []);
+  }, [navbarStore]);
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   const handleCategoryClick = useCallback(
     (value: string) => {

@@ -63,7 +63,9 @@ export default function Home() {
           {...register("category")}
         >
           {categories.map((cat) => (
-            <option value={cat.value}>{cat.label}</option>
+            <option value={cat.value} key={cat.value}>
+              {cat.label}
+            </option>
           ))}
         </select>
         {/* <Select
