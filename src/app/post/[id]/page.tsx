@@ -2,6 +2,7 @@
 import fetcher from "@/lib/fetcher";
 import { Comment } from "@/types/comment";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 import useSWR from "swr";
 
@@ -53,7 +54,12 @@ const PostPage = ({ params }: { params: { id: string } }) => {
           {post.comments.map((comment: Comment, idx: number) => (
             <li className="pt-2" key={idx}>
               <hr />
-              <div className="text-lg font-bold">{comment.user.name}</div>
+              <Link
+                className="hover:cursor-pointer"
+                href={`/profile/${comment.user.id} `}
+              >
+                <div className="text-lg font-bold">{comment.user.name}</div>
+              </Link>
               <div className="text-md">{comment.text}</div>
             </li>
           ))}

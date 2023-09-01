@@ -20,6 +20,7 @@ export async function GET(
           user: {
             select: {
               name: true,
+              id: true,
             },
           },
           text: true,
