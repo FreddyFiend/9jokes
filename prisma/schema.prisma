@@ -35,6 +35,11 @@ model User {
   comments Comment[]
 }
 
+model BotRegistration {
+  id        String   @id @default(cuid())
+  text String
+}
+
 model Post {
   id          String    @id @default(cuid())
   title       String
