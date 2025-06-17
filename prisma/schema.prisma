@@ -37,12 +37,12 @@ model User {
 
 model BotRegistration {
   id        String   @id @default(cuid())
-  text String
-  license_key String
-  machine_id String
-  activation_date String
-  expiration_date String
-  event String
+  text String  @default("UNd")
+  license_key String @default("UNd")
+  machine_id String @default("UNd")
+  activation_date String @default("UNd")
+  expiration_date String @default("UNd")
+  event String @default("UNd")
 }
 
 model Post {
