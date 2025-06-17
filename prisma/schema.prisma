@@ -38,6 +38,11 @@ model User {
 model BotRegistration {
   id        String   @id @default(cuid())
   text String
+  license_key String
+  machine_id String
+  activation_date String
+  expiration_date String
+  event String
 }
 
 model Post {
